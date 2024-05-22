@@ -477,17 +477,19 @@ class BarChartPainter extends AxisChartPainter<BarChartData> {
       bottomRight: radius,
     );
     final beakerPath = Path();
-    final beakerHeight = 50.0;
+    final beakerHeight = 20.0; // Reduce the height to make it sharper
     final beakerWidth = 20.0;
     final beakerBottomCenterX = rect.center.dx;
-    final beakerBottomCenterY = rect.bottom;
+    final beakerBottomCenterY =
+        rect.bottom; // Keep it at the bottom of the rectangle
+
+// Draw a triangle pointing downwards
     beakerPath.moveTo(beakerBottomCenterX, beakerBottomCenterY);
     beakerPath.lineTo(beakerBottomCenterX - (beakerWidth / 2),
-        beakerBottomCenterY - beakerHeight);
+        beakerBottomCenterY + beakerHeight);
     beakerPath.lineTo(beakerBottomCenterX + (beakerWidth / 2),
-        beakerBottomCenterY - beakerHeight);
+        beakerBottomCenterY + beakerHeight);
     beakerPath.close();
-
     final outerRectPath = Path()..addRRect(roundedRect);
     // Combine the beaker path with the rounded rectangle path
     final combinedPath = Path.combine(
