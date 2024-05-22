@@ -487,9 +487,9 @@ class BarChartPainter extends AxisChartPainter<BarChartData> {
     beakerPath.moveTo(
         beakerBottomCenterX, beakerBottomCenterY); // Start at the bottom center
     beakerPath.lineTo(beakerBottomCenterX - (beakerWidth / 2),
-        beakerBottomCenterY + beakerHeight); // Bottom left
+        beakerBottomCenterY - beakerHeight); // Top left
     beakerPath.lineTo(beakerBottomCenterX + (beakerWidth / 2),
-        beakerBottomCenterY + beakerHeight); // Bottom right
+        beakerBottomCenterY - beakerHeight); // Top right
     beakerPath.close();
 
     final outerRectPath = beakerPath..addRRect(roundedRect);
