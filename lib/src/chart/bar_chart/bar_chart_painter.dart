@@ -477,8 +477,8 @@ class BarChartPainter extends AxisChartPainter<BarChartData> {
       bottomRight: radius,
     );
     final beakerPath = Path();
-    final beakerHeight = 50.0;
-    final beakerWidth = 50.0;
+    final beakerHeight = 20.0;
+    final beakerWidth = 20.0;
     final beakerBottomCenterX = rect.center.dx;
     final beakerBottomCenterY = rect.bottom;
     beakerPath.moveTo(beakerBottomCenterX, beakerBottomCenterY);
