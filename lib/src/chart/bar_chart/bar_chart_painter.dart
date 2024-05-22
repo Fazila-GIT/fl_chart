@@ -476,6 +476,25 @@ class BarChartPainter extends AxisChartPainter<BarChartData> {
       bottomLeft: radius,
       bottomRight: radius,
     );
+    final beakerPath = Path();
+    final beakerHeight = 50.0;
+    final beakerWidth = 50.0;
+    final beakerBottomCenterX = rect.center.dx;
+    final beakerBottomCenterY = rect.bottom;
+    beakerPath.moveTo(beakerBottomCenterX, beakerBottomCenterY);
+    beakerPath.lineTo(beakerBottomCenterX - (beakerWidth / 2),
+        beakerBottomCenterY - beakerHeight);
+    beakerPath.lineTo(beakerBottomCenterX + (beakerWidth / 2),
+        beakerBottomCenterY - beakerHeight);
+    beakerPath.close();
+
+    final outerRectPath = Path()..addRRect(roundedRect);
+    // Combine the beaker path with the rounded rectangle path
+    final combinedPath = Path.combine(
+      PathOperation.union,
+      outerRectPath,
+      beakerPath,
+    );
 
     /// set tooltip's background color for each rod
     _bgTouchTooltipPaint.color = tooltipData.getTooltipColor(showOnBarGroup);
@@ -508,8 +527,8 @@ class BarChartPainter extends AxisChartPainter<BarChartData> {
       angle: rotateAngle,
       drawCallback: () {
         canvasWrapper
-          ..drawRRect(roundedRect, _bgTouchTooltipPaint)
-          ..drawRRect(roundedRect, _borderTouchTooltipPaint)
+          ..drawPath(combinedPath, _bgTouchTooltipPaint)
+          ..drawPath(combinedPath, _borderTouchTooltipPaint)
           ..drawText(tp, drawOffset);
       },
     );
