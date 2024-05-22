@@ -477,31 +477,20 @@ class BarChartPainter extends AxisChartPainter<BarChartData> {
       bottomRight: radius,
     );
     final beakerPath = Path();
-    final beakerHeight = 60.0; // Adjust as needed
-    final beakerWidth = 60.0; // Adjust as needed
-    final beakerBottomCenterX = rect.center.dx;
+    final beakerHeight = 20.0; // Adjust as needed
+    final beakerWidth = 20.0; // Adjust as needed
+    final beakerBottomCenterX = rect.width / 2;
     final beakerBottomCenterY =
-        rect.bottom; // Keep it at the bottom of the rectangle
+        rect.height; // Keep it at the bottom of the rectangle
 
 // Draw a triangle pointing downwards
-    beakerPath.moveTo(
-        beakerBottomCenterX, beakerBottomCenterY); // Start at the bottom center
-    // Define the top left point of the triangle
+    beakerPath.moveTo(beakerBottomCenterX - (beakerWidth / 2),
+        beakerBottomCenterY); // Start at the bottom left
+    beakerPath.lineTo(beakerBottomCenterX + (beakerWidth / 2),
+        beakerBottomCenterY); // Bottom right
     beakerPath.lineTo(
-        beakerBottomCenterX, // Start from the bottom center
-        beakerBottomCenterY +
-            beakerHeight // End point is below the bottom center
-        );
-
-// Add another line from the bottom center to a point further below
-    beakerPath.lineTo(
-        beakerBottomCenterX, // Start from the bottom center
-        beakerBottomCenterY +
-            (beakerHeight * 2) // Adjust the y-coordinate as needed
-        );
-
+        beakerBottomCenterX, beakerBottomCenterY + beakerHeight); // Top center
     beakerPath.close();
-
     final outerRectPath = beakerPath..addRRect(roundedRect);
     // Combine the beaker path with the rounded rectangle path
     final combinedPath = Path.combine(
