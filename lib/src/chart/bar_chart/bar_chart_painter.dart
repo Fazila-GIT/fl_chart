@@ -479,9 +479,9 @@ class BarChartPainter extends AxisChartPainter<BarChartData> {
     final beakerPath = Path();
     final beakerHeight = 20.0; // Adjust as needed
     final beakerWidth = 20.0; // Adjust as needed
-    final beakerBottomCenterX = rect.width / 2;
+    final beakerBottomCenterX = rect.center.dx;
     final beakerBottomCenterY =
-        rect.height; // Keep it at the bottom of the rectangle
+        rect.size.height; // Keep it at the bottom of the rectangle
 
 // Draw a triangle pointing downwards
     beakerPath.moveTo(beakerBottomCenterX - (beakerWidth / 2),
@@ -491,6 +491,7 @@ class BarChartPainter extends AxisChartPainter<BarChartData> {
     beakerPath.lineTo(
         beakerBottomCenterX, beakerBottomCenterY + beakerHeight); // Top center
     beakerPath.close();
+
     final outerRectPath = beakerPath..addRRect(roundedRect);
     // Combine the beaker path with the rounded rectangle path
     final combinedPath = Path.combine(
