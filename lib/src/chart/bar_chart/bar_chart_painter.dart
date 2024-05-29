@@ -401,12 +401,16 @@ class BarChartPainter extends AxisChartPainter<BarChartData> {
 
     final barTopY = min(barToYPixel.dy, barFromYPixel.dy);
     final barBottomY = max(barToYPixel.dy, barFromYPixel.dy);
+    final double spaceBetweenTooltipAndRod = 10;
     final drawTooltipOnTop = tooltipData.direction == TooltipDirection.top ||
         (tooltipData.direction == TooltipDirection.auto &&
             showOnRodData.isUpward());
     final tooltipTop = drawTooltipOnTop
-        ? barTopY - tooltipHeight - tooltipData.tooltipMargin
-        : barBottomY + tooltipData.tooltipMargin;
+        ? barTopY -
+            tooltipHeight -
+            tooltipData.tooltipMargin -
+            spaceBetweenTooltipAndRod
+        : barBottomY + tooltipData.tooltipMargin + spaceBetweenTooltipAndRod;
 
     final tooltipLeft = getTooltipLeft(
       barToYPixel.dx,
