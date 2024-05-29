@@ -851,7 +851,7 @@ class LineChartPainter extends AxisChartPainter<LineChartData> {
           } else {
             to = Offset(
               getPixelX(spot.x, viewSize, holder),
-              0,
+              viewSize.height,
             );
           }
 
