@@ -389,51 +389,92 @@ class LineChartPainter extends AxisChartPainter<LineChartData> {
       /// Define the height of the indicator line
       final indicatorLineHeight = 10.0; // Adjust this value as needed
 
-      /// For drawing the indicator line
-      final lineStartY = min(
+      // For drawing the indicator line above the dot
+      final lineStartYAboveDot = min(
         data.maxY,
         max(
-            data.minY,
-            data.lineTouchData.getTouchLineStart(barData, index) -
-                indicatorLineHeight), // Subtract the height of the indicator line
+          data.minY,
+          data.lineTouchData.getTouchLineStart(barData, index),
+        ),
       );
-      final lineEndY = min(
+      final lineEndYAboveDot = min(
         data.maxY,
         max(
-            data.minY,
-            data.lineTouchData.getTouchLineEnd(barData,
-                index)), // Ensure the end of the line is at the dot's position
+          data.minY,
+          data.lineTouchData.getTouchLineEnd(barData, index),
+        ),
       );
-      final lineStart =
-          Offset(touchedSpot.dx, getPixelY(lineStartY, viewSize, holder));
-      var lineEnd =
-          Offset(touchedSpot.dx, getPixelY(lineEndY, viewSize, holder));
+      final lineStartAboveDot = Offset(
+        touchedSpot.dx,
+        getPixelY(lineStartYAboveDot, viewSize, holder),
+      );
+      var lineEndAboveDot = Offset(
+        touchedSpot.dx,
+        getPixelY(lineEndYAboveDot, viewSize, holder),
+      );
 
-      /// If line end is inside the dot, adjust it so that it doesn't overlap with the dot.
+      // For drawing the indicator line below the dot
+      final lineStartYBelowDot = lineStartYAboveDot - indicatorLineHeight;
+      final lineEndYBelowDot = lineEndYAboveDot - indicatorLineHeight;
+      final lineStartBelowDot = Offset(
+        touchedSpot.dx,
+        getPixelY(lineStartYBelowDot, viewSize, holder),
+      );
+      var lineEndBelowDot = Offset(
+        touchedSpot.dx,
+        getPixelY(lineEndYBelowDot, viewSize, holder),
+      );
+
+      // Adjust line end points if they overlap with the dot
       final dotMinY = touchedSpot.dy - dotHeight / 2;
       final dotMaxY = touchedSpot.dy + dotHeight / 2;
-      if (lineEnd.dy > dotMinY && lineEnd.dy < dotMaxY) {
-        if (lineStart.dy < lineEnd.dy) {
-          lineEnd -= Offset(0, lineEnd.dy - dotMinY);
+      if (lineEndAboveDot.dy > dotMinY && lineEndAboveDot.dy < dotMaxY) {
+        if (lineStartAboveDot.dy < lineEndAboveDot.dy) {
+          lineEndAboveDot -= Offset(0, lineEndAboveDot.dy - dotMinY);
         } else {
-          lineEnd += Offset(0, dotMaxY - lineEnd.dy);
+          lineEndAboveDot += Offset(0, dotMaxY - lineEndAboveDot.dy);
+        }
+      }
+      if (lineEndBelowDot.dy > dotMinY && lineEndBelowDot.dy < dotMaxY) {
+        if (lineStartBelowDot.dy < lineEndBelowDot.dy) {
+          lineEndBelowDot -= Offset(0, lineEndBelowDot.dy - dotMinY);
+        } else {
+          lineEndBelowDot += Offset(0, dotMaxY - lineEndBelowDot.dy);
         }
       }
 
+      // Draw the indicator lines
       final indicatorLine = indicatorData.indicatorBelowLine;
       _touchLinePaint
         ..setColorOrGradientForLine(
           indicatorLine.color,
           indicatorLine.gradient,
-          from: lineStart,
-          to: lineEnd,
+          from: lineStartBelowDot,
+          to: lineEndBelowDot,
         )
         ..strokeWidth = indicatorLine.strokeWidth
         ..transparentIfWidthIsZero();
 
       canvasWrapper.drawDashedLine(
-        lineStart,
-        lineEnd,
+        lineStartBelowDot,
+        lineEndBelowDot,
+        _touchLinePaint,
+        indicatorLine.dashArray,
+      );
+
+      _touchLinePaint
+        ..setColorOrGradientForLine(
+          indicatorLine.color,
+          indicatorLine.gradient,
+          from: lineStartAboveDot,
+          to: lineEndAboveDot,
+        )
+        ..strokeWidth = indicatorLine.strokeWidth
+        ..transparentIfWidthIsZero();
+
+      canvasWrapper.drawDashedLine(
+        lineStartAboveDot,
+        lineEndAboveDot,
         _touchLinePaint,
         indicatorLine.dashArray,
       );
