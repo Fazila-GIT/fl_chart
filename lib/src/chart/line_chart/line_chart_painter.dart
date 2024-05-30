@@ -431,15 +431,33 @@ class LineChartPainter extends AxisChartPainter<LineChartData> {
       if (lineEndAboveDot.dy > dotMinY && lineEndAboveDot.dy < dotMaxY) {
         if (lineStartAboveDot.dy < lineEndAboveDot.dy) {
           lineEndAboveDot -= Offset(0, lineEndAboveDot.dy - dotMinY);
+          lineStartAboveDot -= Offset(
+              0,
+              lineEndAboveDot.dy -
+                  dotMinY); // Move the line start up by the same amount
         } else {
           lineEndAboveDot += Offset(0, dotMaxY - lineEndAboveDot.dy);
+          lineStartAboveDot += Offset(
+              0,
+              dotMaxY -
+                  lineEndAboveDot
+                      .dy); // Move the line start up by the same amount
         }
       }
       if (lineEndBelowDot.dy > dotMinY && lineEndBelowDot.dy < dotMaxY) {
         if (lineStartBelowDot.dy < lineEndBelowDot.dy) {
           lineEndBelowDot -= Offset(0, lineEndBelowDot.dy - dotMinY);
+          lineStartBelowDot -= Offset(
+              0,
+              lineEndBelowDot.dy -
+                  dotMinY); // Move the line start up by the same amount
         } else {
           lineEndBelowDot += Offset(0, dotMaxY - lineEndBelowDot.dy);
+          lineStartBelowDot += Offset(
+              0,
+              dotMaxY -
+                  lineEndBelowDot
+                      .dy); // Move the line start up by the same amount
         }
       }
 
