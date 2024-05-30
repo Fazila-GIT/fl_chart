@@ -802,7 +802,7 @@ class LineChartPainter extends AxisChartPainter<LineChartData> {
 
     final aboveBarLargestRect = Rect.fromLTRB(
       getPixelX(barData.mostLeftSpot.x, viewSize, holder),
-      viewSize.height,
+      0,
       getPixelX(barData.mostRightSpot.x, viewSize, holder),
       getPixelY(barData.mostBottomSpot.y, viewSize, holder),
     );
