@@ -404,7 +404,7 @@ class LineChartPainter extends AxisChartPainter<LineChartData> {
           data.lineTouchData.getTouchLineEnd(barData, index),
         ),
       );
-      final lineStartAboveDot = Offset(
+      var lineStartAboveDot = Offset(
         touchedSpot.dx,
         getPixelY(lineStartYAboveDot, viewSize, holder),
       );
@@ -416,7 +416,7 @@ class LineChartPainter extends AxisChartPainter<LineChartData> {
       // For drawing the indicator line below the dot
       final lineStartYBelowDot = lineStartYAboveDot - indicatorLineHeight;
       final lineEndYBelowDot = lineEndYAboveDot - indicatorLineHeight;
-      final lineStartBelowDot = Offset(
+      var lineStartBelowDot = Offset(
         touchedSpot.dx,
         getPixelY(lineStartYBelowDot, viewSize, holder),
       );
@@ -442,6 +442,12 @@ class LineChartPainter extends AxisChartPainter<LineChartData> {
           lineEndBelowDot += Offset(0, dotMaxY - lineEndBelowDot.dy);
         }
       }
+
+      // Ensure line starts are above or below the dot
+      lineStartAboveDot =
+          Offset(touchedSpot.dx, touchedSpot.dy - dotHeight / 2);
+      lineStartBelowDot =
+          Offset(touchedSpot.dx, touchedSpot.dy + dotHeight / 2);
 
       // Draw the indicator lines
       final indicatorLine = indicatorData.indicatorBelowLine;
