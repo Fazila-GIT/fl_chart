@@ -386,14 +386,23 @@ class LineChartPainter extends AxisChartPainter<LineChartData> {
         dotHeight = dotPainter.getSize(spot).height;
       }
 
+      /// Define the height of the indicator line
+      final indicatorLineHeight = 10.0; // Adjust this value as needed
+
       /// For drawing the indicator line
       final lineStartY = min(
         data.maxY,
-        max(data.minY, data.lineTouchData.getTouchLineStart(barData, index)),
+        max(
+            data.minY,
+            data.lineTouchData.getTouchLineStart(barData, index) -
+                indicatorLineHeight), // Subtract the height of the indicator line
       );
       final lineEndY = min(
         data.maxY,
-        max(data.minY, data.lineTouchData.getTouchLineEnd(barData, index)),
+        max(
+            data.minY,
+            data.lineTouchData.getTouchLineEnd(barData,
+                index)), // Ensure the end of the line is at the dot's position
       );
       final lineStart =
           Offset(touchedSpot.dx, getPixelY(lineStartY, viewSize, holder));
