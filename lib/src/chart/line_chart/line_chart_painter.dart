@@ -666,7 +666,7 @@ class LineChartPainter extends AxisChartPainter<LineChartData> {
     if (!fillCompletely && barData.aboveBarData.applyCutOffY) {
       y = getPixelY(barData.aboveBarData.cutOffY, viewSize, holder);
     } else {
-      y = viewSize.height;
+      y = 0.0;
     }
     aboveBarPath.lineTo(x, y);
 
@@ -675,7 +675,7 @@ class LineChartPainter extends AxisChartPainter<LineChartData> {
     if (!fillCompletely && barData.aboveBarData.applyCutOffY) {
       y = getPixelY(barData.aboveBarData.cutOffY, viewSize, holder);
     } else {
-      y = viewSize.height;
+      y = 0.0;
     }
     aboveBarPath.lineTo(x, y);
 
@@ -851,7 +851,7 @@ class LineChartPainter extends AxisChartPainter<LineChartData> {
           } else {
             to = Offset(
               getPixelX(spot.x, viewSize, holder),
-              viewSize.height,
+              0,
             );
           }
 
