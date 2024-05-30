@@ -459,7 +459,7 @@ class LineChartPainter extends AxisChartPainter<LineChartData> {
         ..setColorOrGradientForLine(
           indicatorLine.color,
           indicatorLine.gradient,
-          from: lineStartBelowDot,
+          from: lineStartAboveDot,
           to: lineEndBelowDot,
         )
         ..strokeWidth = indicatorLine.strokeWidth
