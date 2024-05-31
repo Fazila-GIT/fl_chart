@@ -442,14 +442,16 @@ class LineChartPainter extends AxisChartPainter<LineChartData> {
         ..setColorOrGradientForLine(
           indicatorLine.color,
           indicatorLine.gradient,
-          from: lineStartBelowDot,
+          from: Offset(touchedSpot.dx,
+              touchedSpot.dy - dotHeight / 2), // Adjusted start point
           to: lineEndBelowDot,
         )
         ..strokeWidth = indicatorLine.strokeWidth
         ..transparentIfWidthIsZero();
 
       canvasWrapper.drawDashedLine(
-        lineStartBelowDot,
+        Offset(touchedSpot.dx,
+            touchedSpot.dy - dotHeight / 2), // Adjusted start point
         lineEndBelowDot,
         _touchLinePaint,
         indicatorLine.dashArray,
@@ -459,14 +461,16 @@ class LineChartPainter extends AxisChartPainter<LineChartData> {
         ..setColorOrGradientForLine(
           indicatorLine.color,
           indicatorLine.gradient,
-          from: lineStartAboveDot,
+          from: Offset(touchedSpot.dx,
+              touchedSpot.dy + dotHeight / 2), // Adjusted start point
           to: lineEndAboveDot,
         )
         ..strokeWidth = indicatorLine.strokeWidth
         ..transparentIfWidthIsZero();
 
       canvasWrapper.drawDashedLine(
-        lineStartAboveDot,
+        Offset(touchedSpot.dx,
+            touchedSpot.dy + dotHeight / 2), // Adjusted start point
         lineEndAboveDot,
         _touchLinePaint,
         indicatorLine.dashArray,
