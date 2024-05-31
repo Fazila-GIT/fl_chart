@@ -387,7 +387,7 @@ class LineChartPainter extends AxisChartPainter<LineChartData> {
       }
 
       /// Define the height of the indicator line
-      final indicatorLineHeight = 10.0; // Adjust this value as needed
+      final indicatorLineHeight = 20.0; // Adjust this value as needed
 
       // For drawing the indicator line above the dot
       final lineStartYAboveDot = min(
@@ -442,8 +442,7 @@ class LineChartPainter extends AxisChartPainter<LineChartData> {
         ..setColorOrGradientForLine(
           indicatorLine.color,
           indicatorLine.gradient,
-          from: Offset(touchedSpot.dx,
-              touchedSpot.dy - dotHeight / 2), // Adjusted start point
+          from: lineStartAboveDot , // Adjusted start point
           to: lineEndBelowDot,
         )
         ..strokeWidth = indicatorLine.strokeWidth
@@ -468,15 +467,7 @@ class LineChartPainter extends AxisChartPainter<LineChartData> {
         ..strokeWidth = indicatorLine.strokeWidth
         ..transparentIfWidthIsZero();
 
-      canvasWrapper.drawDashedLine(
-        Offset(touchedSpot.dx,
-            touchedSpot.dy + dotHeight / 2), // Adjusted start point
-        lineEndAboveDot,
-        _touchLinePaint,
-        indicatorLine.dashArray,
-      );
-
-      /// Draw the indicator dot
+// Draw the indicator dot
       if (showingDots) {
         canvasWrapper.drawDot(dotPainter, spot, touchedSpot);
       }
