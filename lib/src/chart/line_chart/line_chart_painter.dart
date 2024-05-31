@@ -387,7 +387,7 @@ class LineChartPainter extends AxisChartPainter<LineChartData> {
       }
 
       /// Define the height of the indicator line
-      final indicatorLineHeight = 20.0; // Adjust this value as needed
+      final indicatorLineHeight = 10.0; // Adjust this value as needed
 
       // For drawing the indicator line above the dot
       final lineStartYAboveDot = min(
@@ -406,7 +406,7 @@ class LineChartPainter extends AxisChartPainter<LineChartData> {
       );
       var lineStartAboveDot = Offset(
         touchedSpot.dx,
-        getPixelY(lineStartYAboveDot, viewSize, holder),
+        getPixelY(lineStartYAboveDot + indicatorLineHeight, viewSize, holder),
       );
       var lineEndAboveDot = Offset(
         touchedSpot.dx,
@@ -442,7 +442,7 @@ class LineChartPainter extends AxisChartPainter<LineChartData> {
         ..setColorOrGradientForLine(
           indicatorLine.color,
           indicatorLine.gradient,
-          from: lineStartAboveDot , // Adjusted start point
+          from: lineStartAboveDot, // Adjusted start point
           to: lineEndBelowDot,
         )
         ..strokeWidth = indicatorLine.strokeWidth
