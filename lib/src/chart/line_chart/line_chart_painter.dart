@@ -387,7 +387,7 @@ class LineChartPainter extends AxisChartPainter<LineChartData> {
       }
 
       /// Define the height of the indicator line
-      final indicatorLineHeight = 10.0; // Adjust this value as needed
+      final indicatorLineHeight = 8.0; // Adjust this value as needed
 
       // For drawing the indicator line above the dot
       final lineStartYAboveDot = min(
