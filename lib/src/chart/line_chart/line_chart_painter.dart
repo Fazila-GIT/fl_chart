@@ -428,30 +428,13 @@ class LineChartPainter extends AxisChartPainter<LineChartData> {
       // Adjust line end points if they overlap with the dot
       final dotMinY = touchedSpot.dy - dotHeight / 2;
       final dotMaxY = touchedSpot.dy + dotHeight / 2;
+
       if (lineEndAboveDot.dy > dotMinY && lineEndAboveDot.dy < dotMaxY) {
-        if (lineStartAboveDot.dy < lineEndAboveDot.dy) {
-          lineEndAboveDot -= Offset(0, lineEndAboveDot.dy - dotMinY);
-          lineStartAboveDot -= Offset(0, lineEndAboveDot.dy - dotMinY);
-        } else {
-          lineEndAboveDot += Offset(0, dotMaxY - lineEndAboveDot.dy);
-          lineStartAboveDot += Offset(0, dotMaxY - lineEndAboveDot.dy);
-        }
+        lineEndAboveDot = Offset(lineEndAboveDot.dx, dotMaxY);
       }
       if (lineEndBelowDot.dy > dotMinY && lineEndBelowDot.dy < dotMaxY) {
-        if (lineStartBelowDot.dy < lineEndBelowDot.dy) {
-          lineEndBelowDot -= Offset(0, lineEndBelowDot.dy - dotMinY);
-          lineStartBelowDot -= Offset(0, lineEndBelowDot.dy - dotMinY);
-        } else {
-          lineEndBelowDot += Offset(0, dotMaxY - lineEndBelowDot.dy);
-          lineStartBelowDot += Offset(0, dotMaxY - lineEndBelowDot.dy);
-        }
+        lineEndBelowDot = Offset(lineEndBelowDot.dx, dotMinY);
       }
-
-      // Ensure line starts are above or below the dot
-      lineStartAboveDot =
-          Offset(touchedSpot.dx, touchedSpot.dy - dotHeight / 2);
-      lineStartBelowDot =
-          Offset(touchedSpot.dx, touchedSpot.dy + dotHeight / 2);
 
       // Draw the indicator lines
       final indicatorLine = indicatorData.indicatorBelowLine;
@@ -459,7 +442,7 @@ class LineChartPainter extends AxisChartPainter<LineChartData> {
         ..setColorOrGradientForLine(
           indicatorLine.color,
           indicatorLine.gradient,
-          from: lineStartAboveDot,
+          from: lineStartBelowDot,
           to: lineEndBelowDot,
         )
         ..strokeWidth = indicatorLine.strokeWidth
@@ -476,8 +459,8 @@ class LineChartPainter extends AxisChartPainter<LineChartData> {
         ..setColorOrGradientForLine(
           indicatorLine.color,
           indicatorLine.gradient,
-          from: lineStartAboveDot, // Move this line above the below dot
-          to: lineEndAboveDot, // Move this line above the below dot
+          from: lineStartAboveDot,
+          to: lineEndAboveDot,
         )
         ..strokeWidth = indicatorLine.strokeWidth
         ..transparentIfWidthIsZero();
