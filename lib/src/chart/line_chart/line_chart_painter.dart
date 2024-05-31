@@ -422,7 +422,7 @@ class LineChartPainter extends AxisChartPainter<LineChartData> {
       );
       var lineEndBelowDot = Offset(
         touchedSpot.dx,
-        getPixelY(lineEndYBelowDot, viewSize, holder),
+        getPixelY(lineEndYBelowDot - indicatorLineHeight, viewSize, holder),
       );
 
       // Adjust line end points if they overlap with the dot
@@ -444,7 +444,7 @@ class LineChartPainter extends AxisChartPainter<LineChartData> {
           indicatorLine.color,
           indicatorLine.gradient,
           from: lineStartAboveDot, // Adjusted start point
-          to: lineStartBelowDot,
+          to: lineEndBelowDot,
         )
         ..strokeWidth = indicatorLine.strokeWidth
         ..transparentIfWidthIsZero();
