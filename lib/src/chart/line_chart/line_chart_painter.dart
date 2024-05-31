@@ -387,7 +387,7 @@ class LineChartPainter extends AxisChartPainter<LineChartData> {
       }
 
       /// Define the height of the indicator line
-      final indicatorLineHeight = 8.0; // Adjust this value as needed
+      final indicatorLineHeight = 10.0; // Adjust this value as needed
 
       // For drawing the indicator line above the dot
       final lineStartYAboveDot = min(
@@ -422,7 +422,7 @@ class LineChartPainter extends AxisChartPainter<LineChartData> {
       );
       var lineEndBelowDot = Offset(
         touchedSpot.dx,
-        getPixelY(lineEndYBelowDot - 5, viewSize, holder),
+        getPixelY(lineEndYBelowDot - indicatorLineHeight, viewSize, holder),
       );
 
       // Adjust line end points if they overlap with the dot
@@ -433,7 +433,8 @@ class LineChartPainter extends AxisChartPainter<LineChartData> {
         lineEndAboveDot = Offset(lineEndAboveDot.dx, dotMaxY);
       }
       if (lineEndBelowDot.dy > dotMinY && lineEndBelowDot.dy < dotMaxY) {
-        lineEndBelowDot = Offset(lineEndBelowDot.dx, dotMinY);
+        lineEndBelowDot =
+            Offset(lineEndBelowDot.dx - indicatorLineHeight, dotMinY);
       }
 
       // Draw the indicator lines
