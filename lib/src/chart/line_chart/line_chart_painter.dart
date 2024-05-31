@@ -456,15 +456,15 @@ class LineChartPainter extends AxisChartPainter<LineChartData> {
         indicatorLine.dashArray,
       );
 
-      _touchLinePaint
-        ..setColorOrGradientForLine(
-          indicatorLine.color,
-          indicatorLine.gradient,
-          from: lineStartAboveDot, // Adjusted start point
-          to: lineStartBelowDot,
-        )
-        ..strokeWidth = indicatorLine.strokeWidth
-        ..transparentIfWidthIsZero();
+      // _touchLinePaint
+      //   ..setColorOrGradientForLine(
+      //     indicatorLine.color,
+      //     indicatorLine.gradient,
+      //     from: lineStartAboveDot, // Adjusted start point
+      //     to: lineStartBelowDot,
+      //   )
+      //   ..strokeWidth = indicatorLine.strokeWidth
+      //   ..transparentIfWidthIsZero();
 
 // Draw the indicator dot
       if (showingDots) {
