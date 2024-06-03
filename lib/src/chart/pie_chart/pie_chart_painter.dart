@@ -112,6 +112,7 @@ class PieChartPainter extends BaseChartPainter<PieChartData> {
             rect,
           )
           ..strokeWidth = section.radius
+          ..strokeCap = StrokeCap.round
           ..style = PaintingStyle.fill;
 
         final bounds = Rect.fromCircle(
@@ -136,6 +137,7 @@ class PieChartPainter extends BaseChartPainter<PieChartData> {
             section.borderSide.color.opacity != 0.0) {
           _sectionStrokePaint
             ..strokeWidth = section.borderSide.width
+            ..strokeCap = StrokeCap.round
             ..color = section.borderSide.color;
           // Outer
           canvasWrapper
@@ -330,8 +332,8 @@ class PieChartPainter extends BaseChartPainter<PieChartData> {
 
       _sectionStrokePaint
         ..strokeWidth = section.borderSide.width * 2
-        ..color = section.borderSide.color
-        ..strokeCap = StrokeCap.round;
+        ..strokeCap = StrokeCap.round
+        ..color = section.borderSide.color;
       canvasWrapper
         ..drawPath(
           sectionPath,
