@@ -111,7 +111,7 @@ class PieChartPainter extends BaseChartPainter<PieChartData> {
             section.gradient,
             rect,
           )
-          ..strokeWidth = 16
+          ..strokeWidth = section.radius
           ..strokeCap = StrokeCap.round
           ..style = PaintingStyle.fill;
 
@@ -129,14 +129,14 @@ class PieChartPainter extends BaseChartPainter<PieChartData> {
           ..drawCircle(
             center,
             centerRadius,
-            _sectionPaint..blendMode = BlendMode.srcOver,
+            _sectionPaint..blendMode = BlendMode.srcOut,
           )
           ..restore();
         _sectionPaint.blendMode = BlendMode.srcOver;
         if (section.borderSide.width != 0.0 &&
             section.borderSide.color.opacity != 0.0) {
           _sectionStrokePaint
-            ..strokeWidth = 16
+            ..strokeWidth = section.borderSide.width
             ..strokeCap = StrokeCap.round
             ..color = section.borderSide.color;
           // Outer
@@ -331,7 +331,7 @@ class PieChartPainter extends BaseChartPainter<PieChartData> {
         ..clipPath(sectionPath);
 
       _sectionStrokePaint
-        ..strokeWidth = 16
+        ..strokeWidth = section.borderSide.width * 2
         ..color = section.borderSide.color
         ..strokeCap = StrokeCap.round;
       canvasWrapper
