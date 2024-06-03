@@ -311,7 +311,8 @@ class PieChartPainter extends BaseChartPainter<PieChartData> {
         sectionPath.getBounds(),
       )
       ..style = PaintingStyle.fill
-      ..strokeCap = StrokeCap.round;
+      ..strokeCap = StrokeCap.round
+      ..strokeJoin = StrokeJoin.round;
     canvasWrapper.drawPath(sectionPath, _sectionPaint);
   }
 
