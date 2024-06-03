@@ -129,7 +129,7 @@ class PieChartPainter extends BaseChartPainter<PieChartData> {
           ..drawCircle(
             center,
             centerRadius,
-            _sectionPaint..blendMode = BlendMode.srcOut,
+            _sectionPaint..blendMode = BlendMode.srcOver,
           )
           ..restore();
         _sectionPaint.blendMode = BlendMode.srcOver;
@@ -212,9 +212,9 @@ class PieChartPainter extends BaseChartPainter<PieChartData> {
     var sectionPath = Path()
       ..moveTo(startLine.from.dx, startLine.from.dy)
       ..lineTo(startLine.to.dx, startLine.to.dy)
-      ..arcTo(sectionRadiusRect, startRadians, sweepRadians, false)
+      ..arcTo(sectionRadiusRect, startRadians, sweepRadians, true)
       ..lineTo(endLine.from.dx, endLine.from.dy)
-      ..arcTo(centerRadiusRect, endRadians, -sweepRadians, false)
+      ..arcTo(centerRadiusRect, endRadians, -sweepRadians, true)
       ..moveTo(startLine.from.dx, startLine.from.dy)
       ..close();
 
@@ -310,7 +310,8 @@ class PieChartPainter extends BaseChartPainter<PieChartData> {
         section.gradient,
         sectionPath.getBounds(),
       )
-      ..style = PaintingStyle.fill;
+      ..style = PaintingStyle.fill
+      ..strokeCap = StrokeCap.round;
     canvasWrapper.drawPath(sectionPath, _sectionPaint);
   }
 
