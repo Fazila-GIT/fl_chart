@@ -212,9 +212,9 @@ class PieChartPainter extends BaseChartPainter<PieChartData> {
     var sectionPath = Path()
       ..moveTo(startLine.from.dx, startLine.from.dy)
       ..lineTo(startLine.to.dx, startLine.to.dy)
-      ..arcTo(sectionRadiusRect, startRadians, sweepRadians, true)
+      ..arcTo(sectionRadiusRect, startRadians, sweepRadians, false)
       ..lineTo(endLine.from.dx, endLine.from.dy)
-      ..arcTo(centerRadiusRect, endRadians, -sweepRadians, true)
+      ..arcTo(centerRadiusRect, endRadians, -sweepRadians, false)
       ..moveTo(startLine.from.dx, startLine.from.dy)
       ..close();
 
