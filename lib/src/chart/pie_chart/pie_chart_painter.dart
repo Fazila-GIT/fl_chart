@@ -327,8 +327,8 @@ class PieChartPainter extends BaseChartPainter<PieChartData> {
         ..saveLayer(
           Rect.fromLTWH(0, 0, viewSize.width, viewSize.height),
           Paint(),
-        )
-        ..clipPath(sectionPath);
+        );
+      //..clipPath(sectionPath);
 
       _sectionStrokePaint
         ..strokeWidth = section.borderSide.width * 2
