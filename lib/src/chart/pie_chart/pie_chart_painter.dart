@@ -129,7 +129,7 @@ class PieChartPainter extends BaseChartPainter<PieChartData> {
           ..drawCircle(
             center,
             centerRadius,
-            _sectionPaint..blendMode = BlendMode.srcOut,
+            _sectionPaint..blendMode = BlendMode.srcOver,
           )
           ..restore();
         _sectionPaint.blendMode = BlendMode.srcOver;
