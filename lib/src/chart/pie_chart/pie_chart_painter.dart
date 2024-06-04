@@ -7,7 +7,6 @@ import 'package:fl_chart/src/chart/pie_chart/pie_chart_data.dart';
 import 'package:fl_chart/src/extensions/paint_extension.dart';
 import 'package:fl_chart/src/utils/canvas_wrapper.dart';
 import 'package:fl_chart/src/utils/utils.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 /// Paints [PieChartData] in the canvas, it can be used in a [CustomPainter]
@@ -95,7 +94,7 @@ class PieChartPainter extends BaseChartPainter<PieChartData> {
     final data = holder.data;
     final viewSize = canvasWrapper.size;
 
-    final center = viewSize.center(Offset.zero);
+    final center = Offset(viewSize.width / 2, viewSize.height / 2);
 
     var tempAngle = data.startDegreeOffset;
 
@@ -112,13 +111,12 @@ class PieChartPainter extends BaseChartPainter<PieChartData> {
             section.gradient,
             rect,
           )
-          ..strokeWidth = 8
-          ..strokeCap = StrokeCap.round
-          ..style = PaintingStyle.stroke;
+          ..strokeWidth = section.radius
+          ..style = PaintingStyle.fill;
 
         final bounds = Rect.fromCircle(
           center: center,
-          radius: radius,
+          radius: centerRadius + section.radius,
         );
         canvasWrapper
           ..saveLayer(bounds, _sectionSaveLayerPaint)
@@ -130,15 +128,14 @@ class PieChartPainter extends BaseChartPainter<PieChartData> {
           ..drawCircle(
             center,
             centerRadius,
-            _sectionPaint..blendMode = BlendMode.srcOver,
+            _sectionPaint..blendMode = BlendMode.srcOut,
           )
           ..restore();
         _sectionPaint.blendMode = BlendMode.srcOver;
         if (section.borderSide.width != 0.0 &&
             section.borderSide.color.opacity != 0.0) {
           _sectionStrokePaint
-            ..strokeWidth = 8
-            ..strokeCap = StrokeCap.round
+            ..strokeWidth = section.borderSide.width
             ..color = section.borderSide.color;
           // Outer
           canvasWrapper
@@ -168,7 +165,7 @@ class PieChartPainter extends BaseChartPainter<PieChartData> {
       );
 
       drawSection(section, sectionPath, canvasWrapper);
-      drawSectionStroke(section, sectionPath, canvasWrapper, viewSize, center);
+      drawSectionStroke(section, sectionPath, canvasWrapper, viewSize);
       tempAngle += sectionDegree;
     }
   }
@@ -311,26 +308,28 @@ class PieChartPainter extends BaseChartPainter<PieChartData> {
         section.gradient,
         sectionPath.getBounds(),
       )
-      ..style = PaintingStyle.stroke
-      ..strokeCap = StrokeCap.round
-      ..strokeJoin = StrokeJoin.round;
+      ..style = PaintingStyle.fill;
     canvasWrapper.drawPath(sectionPath, _sectionPaint);
   }
 
   @visibleForTesting
-  void drawSectionStroke(PieChartSectionData section, Path sectionPath,
-      CanvasWrapper canvasWrapper, Size viewSize, Offset center) {
+  void drawSectionStroke(
+    PieChartSectionData section,
+    Path sectionPath,
+    CanvasWrapper canvasWrapper,
+    Size viewSize,
+  ) {
     if (section.borderSide.width != 0.0 &&
         section.borderSide.color.opacity != 0.0) {
       canvasWrapper
         ..saveLayer(
-          Rect.fromCircle(center: center, radius: viewSize.width),
+          Rect.fromLTWH(0, 0, viewSize.width, viewSize.height),
           Paint(),
-        );
-      // ..clipPath(sectionPath);
+        )
+        ..clipPath(sectionPath);
 
       _sectionStrokePaint
-        ..strokeWidth = section.radius
+        ..strokeWidth = section.borderSide.width * 2
         ..color = section.borderSide.color
         ..strokeCap = StrokeCap.round;
       canvasWrapper
