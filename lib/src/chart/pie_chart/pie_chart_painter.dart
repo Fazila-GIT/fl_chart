@@ -308,7 +308,8 @@ class PieChartPainter extends BaseChartPainter<PieChartData> {
         section.gradient,
         sectionPath.getBounds(),
       )
-      ..style = PaintingStyle.stroke;
+      ..style = PaintingStyle.fill
+      ..strokeCap = StrokeCap.round;
     canvasWrapper.drawPath(sectionPath, _sectionPaint);
   }
 
