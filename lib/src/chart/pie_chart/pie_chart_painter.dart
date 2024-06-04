@@ -7,6 +7,7 @@ import 'package:fl_chart/src/chart/pie_chart/pie_chart_data.dart';
 import 'package:fl_chart/src/extensions/paint_extension.dart';
 import 'package:fl_chart/src/utils/canvas_wrapper.dart';
 import 'package:fl_chart/src/utils/utils.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 /// Paints [PieChartData] in the canvas, it can be used in a [CustomPainter]
@@ -167,7 +168,7 @@ class PieChartPainter extends BaseChartPainter<PieChartData> {
       );
 
       drawSection(section, sectionPath, canvasWrapper);
-      drawSectionStroke(section, sectionPath, canvasWrapper, viewSize);
+      drawSectionStroke(section, sectionPath, canvasWrapper, viewSize, center);
       tempAngle += sectionDegree;
     }
   }
@@ -317,23 +318,19 @@ class PieChartPainter extends BaseChartPainter<PieChartData> {
   }
 
   @visibleForTesting
-  void drawSectionStroke(
-    PieChartSectionData section,
-    Path sectionPath,
-    CanvasWrapper canvasWrapper,
-    Size viewSize,
-  ) {
+  void drawSectionStroke(PieChartSectionData section, Path sectionPath,
+      CanvasWrapper canvasWrapper, Size viewSize, Offset center) {
     if (section.borderSide.width != 0.0 &&
         section.borderSide.color.opacity != 0.0) {
       canvasWrapper
         ..saveLayer(
-          Rect.fromLTWH(0, 0, viewSize.width, viewSize.height),
+          Rect.fromCircle(center: center, radius: viewSize.width),
           Paint(),
-        )
-        ..clipPath(sectionPath);
+        );
+      // ..clipPath(sectionPath);
 
       _sectionStrokePaint
-        ..strokeWidth = 8
+        ..strokeWidth = section.radius
         ..color = section.borderSide.color
         ..strokeCap = StrokeCap.round;
       canvasWrapper
