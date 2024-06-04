@@ -94,7 +94,7 @@ class PieChartPainter extends BaseChartPainter<PieChartData> {
     final data = holder.data;
     final viewSize = canvasWrapper.size;
 
-    final center = Offset(viewSize.width / 2, viewSize.height / 2);
+    final center = viewSize.center(Offset.zero);
 
     var tempAngle = data.startDegreeOffset;
 
