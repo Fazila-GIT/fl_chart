@@ -26,7 +26,7 @@ class PieChartPainter extends BaseChartPainter<PieChartData> {
 
     _sectionStrokePaint = Paint()..style = PaintingStyle.stroke;
 
-    _centerSpacePaint = Paint()..style = PaintingStyle.stroke;
+    _centerSpacePaint = Paint()..style = PaintingStyle.fill;
   }
 
   late Paint _sectionPaint;
@@ -310,7 +310,7 @@ class PieChartPainter extends BaseChartPainter<PieChartData> {
         section.gradient,
         sectionPath.getBounds(),
       )
-      ..style = PaintingStyle.stroke
+      ..style = PaintingStyle.fill
       ..strokeCap = StrokeCap.round
       ..strokeJoin = StrokeJoin.round;
     canvasWrapper.drawPath(sectionPath, _sectionPaint);
