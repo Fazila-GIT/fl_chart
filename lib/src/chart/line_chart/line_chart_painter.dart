@@ -432,7 +432,7 @@ class LineChartPainter extends AxisChartPainter<LineChartData> {
       final lineBelowDotStart =
           Offset(touchedSpot.dx, touchedSpot.dy + dotHeight / 2);
       final lineBelowDotEnd =
-          Offset(touchedSpot.dx, getPixelY(lineEndY + 10, viewSize, holder));
+          Offset(touchedSpot.dx, getPixelY(lineEndY + 5, viewSize, holder));
 
       _touchLinePaint
         ..setColorOrGradientForLine(
