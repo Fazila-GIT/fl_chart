@@ -398,7 +398,7 @@ class LineChartPainter extends AxisChartPainter<LineChartData> {
       final lineStart =
           Offset(touchedSpot.dx, getPixelY(lineStartY + 10, viewSize, holder));
       var lineEnd =
-          Offset(touchedSpot.dx, getPixelY(lineEndY, viewSize, holder));
+          Offset(touchedSpot.dx, getPixelY(lineEndY + 10, viewSize, holder));
 
       /// If line end is inside the dot, adjust it so that it doesn't overlap with the dot.
       final dotMinY = touchedSpot.dy - dotHeight / 2;
@@ -410,7 +410,7 @@ class LineChartPainter extends AxisChartPainter<LineChartData> {
       //     lineEnd += Offset(0, dotMaxY - lineEnd.dy);
       //   }
       // }
-
+      lineEnd += Offset(0, dotMaxY - lineEnd.dy);
       final indicatorLine = indicatorData.indicatorBelowLine;
       _touchLinePaint
         ..setColorOrGradientForLine(
