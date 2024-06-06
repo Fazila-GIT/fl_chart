@@ -433,7 +433,7 @@ class LineChartPainter extends AxisChartPainter<LineChartData> {
         lineEndAboveDot = Offset(lineEndAboveDot.dx, dotMaxY);
       }
       if (lineEndBelowDot.dy > dotMinY && lineEndBelowDot.dy < dotMaxY) {
-        lineEndBelowDot = Offset(lineEndBelowDot.dx, dotMinY);
+        lineEndBelowDot = Offset(lineEndBelowDot.dx, dotMaxY);
       }
 
       // Draw the indicator lines
