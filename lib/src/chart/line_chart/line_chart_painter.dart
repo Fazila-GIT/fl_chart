@@ -407,8 +407,7 @@ class LineChartPainter extends AxisChartPainter<LineChartData> {
       lineEnd += Offset(0, dotMaxY - lineEnd.dy);
 
       // Draw the indicator line above the dot
-      final lineAboveDotStart =
-          Offset(touchedSpot.dx, getPixelY(lineStartY + 10, viewSize, holder));
+      final lineAboveDotStart = lineStart;
       final lineAboveDotEnd =
           Offset(touchedSpot.dx, touchedSpot.dy - dotHeight / 2);
 
@@ -416,14 +415,14 @@ class LineChartPainter extends AxisChartPainter<LineChartData> {
         ..setColorOrGradientForLine(
           indicatorData.indicatorBelowLine.color,
           indicatorData.indicatorBelowLine.gradient,
-          from: lineStart,
+          from: lineAboveDotStart,
           to: lineAboveDotEnd,
         )
         ..strokeWidth = indicatorData.indicatorBelowLine.strokeWidth
         ..transparentIfWidthIsZero();
 
       canvasWrapper.drawDashedLine(
-        lineStart,
+        lineAboveDotStart,
         lineAboveDotEnd,
         _touchLinePaint,
         indicatorData.indicatorBelowLine.dashArray,
