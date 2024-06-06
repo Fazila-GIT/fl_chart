@@ -385,87 +385,52 @@ class LineChartPainter extends AxisChartPainter<LineChartData> {
             .getDotPainter(spot, xPercentInLine, barData, index);
         dotHeight = dotPainter.getSize(spot).height;
       }
+      final indicatorLineHeight = 10.0;
 
-      /// Define the height of the indicator line
-      final indicatorLineHeight = 10.0; // Adjust this value as needed
-
-      // For drawing the indicator line above the dot
-      final lineStartYAboveDot = min(
+      /// For drawing the indicator line
+      final lineStartY = min(
         data.maxY,
-        max(
-          data.minY,
-          data.lineTouchData.getTouchLineStart(barData, index),
-        ),
+        max(data.minY, data.lineTouchData.getTouchLineStart(barData, index)),
       );
-      final lineEndYAboveDot = min(
+      final lineEndY = min(
         data.maxY,
-        max(
-          data.minY,
-          data.lineTouchData.getTouchLineEnd(barData, index),
-        ),
+        max(data.minY, data.lineTouchData.getTouchLineEnd(barData, index)),
       );
-      var lineStartAboveDot = Offset(
-        touchedSpot.dx,
-        getPixelY(lineStartYAboveDot + indicatorLineHeight, viewSize, holder),
-      );
-      var lineEndAboveDot = Offset(
-        touchedSpot.dx,
-        getPixelY(lineEndYAboveDot + indicatorLineHeight, viewSize, holder),
-      );
+      final lineStart = Offset(touchedSpot.dx,
+          getPixelY(lineStartY + indicatorLineHeight, viewSize, holder));
+      var lineEnd =
+          Offset(touchedSpot.dx, getPixelY(lineEndY, viewSize, holder));
 
-      // For drawing the indicator line below the dot
-      final lineStartYBelowDot = lineEndYAboveDot - indicatorLineHeight;
-      final lineEndYBelowDot = lineEndYAboveDot + indicatorLineHeight;
-      var lineStartBelowDot = Offset(
-        touchedSpot.dx,
-        getPixelY(lineStartYBelowDot, viewSize, holder),
-      );
-      var lineEndBelowDot = Offset(
-        touchedSpot.dx,
-        getPixelY(lineEndYBelowDot, viewSize, holder),
-      );
-
-      // Adjust line end points if they overlap with the dot
+      /// If line end is inside the dot, adjust it so that it doesn't overlap with the dot.
       final dotMinY = touchedSpot.dy - dotHeight / 2;
       final dotMaxY = touchedSpot.dy + dotHeight / 2;
-
-      if (lineEndAboveDot.dy > dotMinY && lineEndAboveDot.dy < dotMaxY) {
-        lineEndAboveDot = Offset(lineEndAboveDot.dx, dotMaxY);
+      if (lineEnd.dy > dotMinY && lineEnd.dy < dotMaxY) {
+        if (lineStart.dy < lineEnd.dy) {
+          lineEnd -= Offset(0, lineEnd.dy - dotMinY);
+        } else {
+          lineEnd += Offset(0, dotMaxY - lineEnd.dy);
+        }
       }
-      if (lineEndBelowDot.dy > dotMinY && lineEndBelowDot.dy < dotMaxY) {
-        lineEndBelowDot = Offset(lineEndBelowDot.dx, dotMinY);
-      }
 
-      // Draw the indicator lines
       final indicatorLine = indicatorData.indicatorBelowLine;
       _touchLinePaint
         ..setColorOrGradientForLine(
           indicatorLine.color,
           indicatorLine.gradient,
-          from: lineStartAboveDot, // Adjusted start point
-          to: lineStartBelowDot,
+          from: lineStart,
+          to: lineEnd,
         )
         ..strokeWidth = indicatorLine.strokeWidth
         ..transparentIfWidthIsZero();
 
       canvasWrapper.drawDashedLine(
-        lineStartAboveDot, // Adjusted start point
-        lineStartBelowDot,
+        lineStart,
+        lineEnd,
         _touchLinePaint,
         indicatorLine.dashArray,
       );
 
-      // _touchLinePaint
-      //   ..setColorOrGradientForLine(
-      //     indicatorLine.color,
-      //     indicatorLine.gradient,
-      //     from: lineStartAboveDot, // Adjusted start point
-      //     to: lineStartBelowDot,
-      //   )
-      //   ..strokeWidth = indicatorLine.strokeWidth
-      //   ..transparentIfWidthIsZero();
-
-// Draw the indicator dot
+      /// Draw the indicator dot
       if (showingDots) {
         canvasWrapper.drawDot(dotPainter, spot, touchedSpot);
       }
