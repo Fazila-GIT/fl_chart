@@ -385,7 +385,6 @@ class LineChartPainter extends AxisChartPainter<LineChartData> {
             .getDotPainter(spot, xPercentInLine, barData, index);
         dotHeight = dotPainter.getSize(spot).height;
       }
-      final indicatorLineHeight = 10.0;
 
       /// For drawing the indicator line
       final lineStartY = min(
@@ -396,8 +395,8 @@ class LineChartPainter extends AxisChartPainter<LineChartData> {
         data.maxY,
         max(data.minY, data.lineTouchData.getTouchLineEnd(barData, index)),
       );
-      final lineStart = Offset(touchedSpot.dx,
-          getPixelY(lineStartY + indicatorLineHeight, viewSize, holder));
+      final lineStart =
+          Offset(touchedSpot.dx, getPixelY(lineStartY, viewSize, holder));
       var lineEnd =
           Offset(touchedSpot.dx, getPixelY(lineEndY, viewSize, holder));
 
