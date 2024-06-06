@@ -403,30 +403,53 @@ class LineChartPainter extends AxisChartPainter<LineChartData> {
       /// If line end is inside the dot, adjust it so that it doesn't overlap with the dot.
       final dotMinY = touchedSpot.dy - dotHeight / 2;
       final dotMaxY = touchedSpot.dy + dotHeight / 2;
-      // if (lineEnd.dy > dotMinY && lineEnd.dy < dotMaxY) {
-      //   if (lineStart.dy < lineEnd.dy) {
-      //     lineEnd -= Offset(0, lineEnd.dy - dotMinY);
-      //   } else {
-      //     lineEnd += Offset(0, dotMaxY - lineEnd.dy);
-      //   }
-      // }
+
       lineEnd += Offset(0, dotMaxY - lineEnd.dy);
-      final indicatorLine = indicatorData.indicatorBelowLine;
+
+      // Draw the indicator line above the dot
+      final lineAboveDotStart =
+          Offset(touchedSpot.dx, getPixelY(lineStartY + 10, viewSize, holder));
+      final lineAboveDotEnd =
+          Offset(touchedSpot.dx, touchedSpot.dy - dotHeight / 2);
+
       _touchLinePaint
         ..setColorOrGradientForLine(
-          indicatorLine.color,
-          indicatorLine.gradient,
+          indicatorData.indicatorBelowLine.color,
+          indicatorData.indicatorBelowLine.gradient,
           from: lineStart,
-          to: lineEnd,
+          to: lineAboveDotEnd,
         )
-        ..strokeWidth = indicatorLine.strokeWidth
+        ..strokeWidth = indicatorData.indicatorBelowLine.strokeWidth
         ..transparentIfWidthIsZero();
 
       canvasWrapper.drawDashedLine(
         lineStart,
-        lineEnd,
+        lineAboveDotEnd,
         _touchLinePaint,
-        indicatorLine.dashArray,
+        indicatorData.indicatorBelowLine.dashArray,
+      );
+
+      // Draw the indicator line below the dot
+      final lineBelowDotStart =
+          Offset(touchedSpot.dx, touchedSpot.dy + dotHeight / 2);
+      final lineBelowDotEnd =
+          Offset(touchedSpot.dx, getPixelY(lineEndY + 10, viewSize, holder));
+
+      _touchLinePaint
+        ..setColorOrGradientForLine(
+          indicatorData.indicatorBelowLine.color,
+          indicatorData.indicatorBelowLine.gradient,
+          from: lineBelowDotStart,
+          to: lineBelowDotEnd,
+        )
+        ..strokeWidth = indicatorData.indicatorBelowLine.strokeWidth
+        ..transparentIfWidthIsZero();
+
+      canvasWrapper.drawDashedLine(
+        lineBelowDotStart,
+        lineBelowDotEnd,
+        _touchLinePaint,
+        indicatorData.indicatorBelowLine.dashArray,
       );
 
       /// Draw the indicator dot
