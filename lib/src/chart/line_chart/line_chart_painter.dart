@@ -346,7 +346,6 @@ class LineChartPainter extends AxisChartPainter<LineChartData> {
     }
   }
 
-  @visibleForTesting
   void drawTouchedSpotsIndicator(
     CanvasWrapper canvasWrapper,
     List<LineIndexDrawingInfo> lineIndexDrawingInfo,
@@ -395,8 +394,15 @@ class LineChartPainter extends AxisChartPainter<LineChartData> {
         data.maxY,
         max(data.minY, data.lineTouchData.getTouchLineEnd(barData, index)),
       );
-      final lineStart =
-          Offset(touchedSpot.dx, getPixelY(lineStartY, viewSize, holder));
+
+      /// Calculate a position above the dot for the line start, with additional height
+      final double lineStartExtraHeight = 10.0; // Adjust this value as needed
+      final lineStart = Offset(
+        touchedSpot.dx,
+        touchedSpot.dy -
+            dotHeight -
+            lineStartExtraHeight, // Adjusted to be above the dot with additional height
+      );
       var lineEnd =
           Offset(touchedSpot.dx, getPixelY(lineEndY, viewSize, holder));
 
