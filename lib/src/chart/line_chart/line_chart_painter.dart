@@ -403,13 +403,13 @@ class LineChartPainter extends AxisChartPainter<LineChartData> {
       /// If line end is inside the dot, adjust it so that it doesn't overlap with the dot.
       final dotMinY = touchedSpot.dy - dotHeight / 2;
       final dotMaxY = touchedSpot.dy + dotHeight / 2;
-      if (lineEnd.dy > dotMinY && lineEnd.dy < dotMaxY) {
-        if (lineStart.dy < lineEnd.dy) {
-          lineEnd -= Offset(0, lineEnd.dy - dotMinY);
-        } else {
-          lineEnd += Offset(0, dotMaxY - lineEnd.dy);
-        }
-      }
+      // if (lineEnd.dy > dotMinY && lineEnd.dy < dotMaxY) {
+      //   if (lineStart.dy < lineEnd.dy) {
+      //     lineEnd -= Offset(0, lineEnd.dy - dotMinY);
+      //   } else {
+      //     lineEnd += Offset(0, dotMaxY - lineEnd.dy);
+      //   }
+      // }
 
       final indicatorLine = indicatorData.indicatorBelowLine;
       _touchLinePaint
