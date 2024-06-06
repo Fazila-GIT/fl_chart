@@ -410,7 +410,7 @@ class LineChartPainter extends AxisChartPainter<LineChartData> {
       );
       var lineEndAboveDot = Offset(
         touchedSpot.dx,
-        getPixelY(lineEndYAboveDot, viewSize, holder),
+        getPixelY(lineEndYAboveDot + indicatorLineHeight, viewSize, holder),
       );
 
       // For drawing the indicator line below the dot
