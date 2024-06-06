@@ -1246,7 +1246,7 @@ class LineChartPainter extends AxisChartPainter<LineChartData> {
     ); // Top center
     beakerPath.close();
 
-    canvasWrapper.drawPath(beakerPath, Paint()..color = Colors.brown);
+    canvasWrapper.drawPath(beakerPath, _bgTouchTooltipPaint);
   }
 
   @visibleForTesting
