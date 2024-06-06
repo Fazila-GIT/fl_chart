@@ -414,7 +414,7 @@ class LineChartPainter extends AxisChartPainter<LineChartData> {
       );
 
       // For drawing the indicator line below the dot
-      final lineStartYBelowDot = lineStartYAboveDot - indicatorLineHeight;
+      final lineStartYBelowDot = lineEndYAboveDot - indicatorLineHeight;
       final lineEndYBelowDot = lineEndYAboveDot + indicatorLineHeight;
       var lineStartBelowDot = Offset(
         touchedSpot.dx,
@@ -433,7 +433,7 @@ class LineChartPainter extends AxisChartPainter<LineChartData> {
         lineEndAboveDot = Offset(lineEndAboveDot.dx, dotMaxY);
       }
       if (lineEndBelowDot.dy > dotMinY && lineEndBelowDot.dy < dotMaxY) {
-        lineEndBelowDot = Offset(lineEndBelowDot.dx, dotMaxY);
+        lineEndBelowDot = Offset(lineEndBelowDot.dx, dotMinY);
       }
 
       // Draw the indicator lines
@@ -443,14 +443,14 @@ class LineChartPainter extends AxisChartPainter<LineChartData> {
           indicatorLine.color,
           indicatorLine.gradient,
           from: lineStartAboveDot, // Adjusted start point
-          to: lineEndBelowDot,
+          to: lineStartBelowDot,
         )
         ..strokeWidth = indicatorLine.strokeWidth
         ..transparentIfWidthIsZero();
 
       canvasWrapper.drawDashedLine(
         lineStartAboveDot, // Adjusted start point
-        lineEndBelowDot,
+        lineStartBelowDot,
         _touchLinePaint,
         indicatorLine.dashArray,
       );
