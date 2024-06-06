@@ -444,14 +444,14 @@ class LineChartPainter extends AxisChartPainter<LineChartData> {
           indicatorLine.color,
           indicatorLine.gradient,
           from: lineStartAboveDot, // Adjusted start point
-          to: lineEndBelowDot,
+          to: lineEndAboveDot,
         )
         ..strokeWidth = indicatorLine.strokeWidth
         ..transparentIfWidthIsZero();
 
       canvasWrapper.drawDashedLine(
         lineStartAboveDot, // Adjusted start point
-        lineStartBelowDot,
+        lineEndAboveDot,
         _touchLinePaint,
         indicatorLine.dashArray,
       );
