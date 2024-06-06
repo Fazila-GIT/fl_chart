@@ -1222,6 +1222,31 @@ class LineChartPainter extends AxisChartPainter<LineChartData> {
       topPosSeek += tp.height;
       topPosSeek += textsBelowMargin;
     }
+
+    // Draw beaker under the rectangle
+    final beakerPath = Path();
+    final beakerHeight = 10.0; // Adjust as needed
+    final beakerWidth = 10.0; // Adjust as needed
+    final beakerBottomCenterX = rect.center.dx + 10;
+    final beakerBottomCenterY =
+        rect.bottom; // Keep it at the bottom of the rectangle
+
+    // Draw a triangle pointing downwards
+    beakerPath.moveTo(
+      beakerBottomCenterX - (beakerWidth / 2),
+      beakerBottomCenterY,
+    ); // Start at the bottom left
+    beakerPath.lineTo(
+      beakerBottomCenterX + (beakerWidth / 2),
+      beakerBottomCenterY,
+    ); // Bottom right
+    beakerPath.lineTo(
+      beakerBottomCenterX,
+      beakerBottomCenterY + beakerHeight,
+    ); // Top center
+    beakerPath.close();
+
+    canvasWrapper.drawPath(beakerPath, Paint()..color = Colors.brown);
   }
 
   @visibleForTesting
