@@ -396,7 +396,7 @@ class LineChartPainter extends AxisChartPainter<LineChartData> {
         max(data.minY, data.lineTouchData.getTouchLineEnd(barData, index)),
       );
       final lineStart =
-          Offset(touchedSpot.dx, getPixelY(lineStartY - 10, viewSize, holder));
+          Offset(touchedSpot.dx, getPixelY(lineStartY + 10, viewSize, holder));
       var lineEnd =
           Offset(touchedSpot.dx, getPixelY(lineEndY, viewSize, holder));
 
