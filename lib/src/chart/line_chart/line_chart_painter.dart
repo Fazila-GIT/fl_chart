@@ -399,8 +399,8 @@ class LineChartPainter extends AxisChartPainter<LineChartData> {
       final double lineStartExtraHeight = 10.0; // Adjust this value as needed
       final lineStart = Offset(
         touchedSpot.dx,
-        touchedSpot.dy -
-            dotHeight -
+        touchedSpot.dy +
+            dotHeight +
             lineStartExtraHeight, // Adjusted to be above the dot with additional height
       );
       var lineEnd =
